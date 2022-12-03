@@ -6,7 +6,7 @@ En esta tarea se desarrolla el uso de Hadoop para mejorar la búsqueda de artíc
 # Inicio
 Para iniciar los contenedores, se debe clonar el repositorio y ejecutar el comando:
 
-    docker build  -t hadoop .
+    docker build --no-cache -t hadoop .
 Y luego se levanta el contenedor con el siguiente comando:
 
     docker run --name hadoop -p 9864:9864 -p 9870:9870 -p 8088:8088 -p 9000:9000 --hostname sd hadoop
