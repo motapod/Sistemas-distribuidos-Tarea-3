@@ -1,0 +1,10 @@
+File1.txt	https://en.wikipedia.org/wiki/2008%E2%80%9309_Birmingham_City_F.C._season
+File2.txt	https://en.wikipedia.org/wiki/The_Army_of_Crime
+File3.txt	https://en.wikipedia.org/wiki/Gabriele_Kelm
+File4.txt	https://en.wikipedia.org/wiki/Liu_Yue_(footballer,_born_1975)
+File5.txt	https://en.wikipedia.org/wiki/Thea_L._James
+File6.txt	https://en.wikipedia.org/wiki/Nimoa_language
+File7.txt	https://en.wikipedia.org/wiki/Nahuel_Map%C3%A1
+File8.txt	https://en.wikipedia.org/wiki/Ollie_Clarke
+File9.txt	https://en.wikipedia.org/wiki/Ted_Alflen
+File10.txt	https://en.wikipedia.org/wiki/Linguistic_purism_in_English

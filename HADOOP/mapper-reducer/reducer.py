@@ -37,6 +37,7 @@ print('Word [Documento1, Count1], [Documento2, Count2], ...')
 
 #### Imprimir en qué documentos aparece cada palabra
 for palabra, conteo in dict.items():
-    print(palabra, end=' ')
+    print(palabra + "\t")
     for key in conteo:
         print('[', key, ',', conteo[key], ']', end=' ')
+    print("\n")

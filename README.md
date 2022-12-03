@@ -30,11 +30,18 @@ Tras realizar la generación de carpetas y haber entregado el input a HADOOP, se
 
     mapred streaming -files mapper.py,reducer.py -input /user/hduser/input/*.txt -output /user/hduser/output -mapper ./mapper.py -reducer ./reducer.py
 
-Finalmente, para ver el output en un archivo .txt, utilizamos el siguiente comando:
+Finalmente, para colocar el output en un archivo .txt, utilizamos el siguiente comando:
 
     hdfs dfs -cat /user/hduser/output/*
 
+# Buscador de palabras
+Para utilizar el buscador de palabras, debemos utilizar el siguiente comando tras realizar todos los pasos anteriores. Colocará todos los datos del output a un json, que actuará como base de datos:
 
+    python create.py
+
+Y finalmente, nuestro buscador lo utilizamos colocando el comando:
+
+    python app.py
 # Video e informe
 En el siguiente drive se encuentra el acceso para el vídeo y el informe solicitados para la tarea.
 
