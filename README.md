@@ -1,8 +1,7 @@
 
 # Sistemas distribuidos: Tarea 3
 
-En esta tarea se desarrolla el uso de Hadoop para mejorar la búsqueda de artículos Wikipedia y así apoyar estudios. En este repositorio se encuentra el link que dirige al drive que contiene tanto el vídeo de explicación como informe, además del link del repositorio del ayudante del cual se basó para la creación del map-reduce y conexión con Hadoop.
-
+En esta tarea se desarrolla el uso de Hadoop para crear una búsqueda de trabajos en los cuales han participados diversos actores, directores y guionistas en la base de datos de IMDb. En este repositorio se encuentra el link que dirige al drive que contiene tanto el vídeo de explicación como informe.
 # Inicio
 Para iniciar los contenedores, se debe clonar el repositorio y ejecutar el comando:
 
@@ -42,9 +41,3 @@ Para utilizar el buscador de palabras, debemos utilizar el siguiente comando tra
 Y finalmente, nuestro buscador lo utilizamos colocando el comando:
 
     python app.py
-# Video e informe
-En el siguiente drive se encuentra el acceso para el vídeo y el informe solicitados para la tarea.
-
-[Drive con vídeo e informe](https://drive.google.com/drive/folders/1WJGvCNPXYalMSL2bNtLYHZvPopZ-k058?usp=sharing)
-
-[Repositorio de ayudante](https://github.com/Naikelin/map-reduce-hadoop)
