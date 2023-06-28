@@ -4,11 +4,13 @@ import csv
 class MovieActorIndex(MRJob):
     
     def configure_args(self):
+        print("entre 1")
         super(MovieActorIndex, self).configure_args()
         self.add_file_arg('--actors', help='name_actor.tsv')
         self.add_file_arg('--movies', help='title_movie.tsv')
         
     def mapper_init(self):
+        print("entre 2")
         # Cargar el archivo name_actor.tsv
         print("File path:", self.options.movies)  # Agrega esta línea para imprimir la ruta del archivo
         with open(self.options.movies, 'r', encoding='utf-8') as f:
@@ -16,6 +18,7 @@ class MovieActorIndex(MRJob):
             self.actor_names = {row[0]: row[1] for row in reader}
         
     def mapper(self, _, line):
+        print("entre 3")
         print(line)
         # Emitir pares clave-valor para actores y películas
         if 'titleType' not in line:
@@ -27,6 +30,7 @@ class MovieActorIndex(MRJob):
                 yield actor_name, movie_id
                 
     def reducer(self, actor_name, movie_ids):
+        print("entre 4")
         # Generar la lista de películas para cada actor
         movie_list = list(movie_ids)
         yield actor_name, movie_list
