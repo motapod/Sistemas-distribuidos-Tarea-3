@@ -5,10 +5,10 @@ En esta tarea se desarrolla el uso de Hadoop para crear una búsqueda de trabajo
 # Inicio
 Para iniciar los contenedores, se debe clonar el repositorio y ejecutar el comando:
 
-    docker build --no-cache -t hadoop .
+    docker build -t hadoop-mapper-reducer 
 Y luego se levanta el contenedor con el siguiente comando:
 
-    docker run --name hadoop -p 9864:9864 -p 9870:9870 -p 8088:8088 -p 9000:9000 --hostname sd hadoop
+    docker run -it --name hadoop-container hadoop-mapper-reducer
 Una vez levantado el contenedor, se verifica la conexión con hadoop en localhost.
 # Ingresar al contenedor
 Para ingresar al contenedor, se utiliza el siguiente comando en otra terminal
@@ -20,21 +20,14 @@ Se deben crear las siguientes carpetas, utilizando los siguientes comandos:
     hdfs dfs -mkdir /user/hduser
     hdfs dfs -mkdir input	
 
-Para pasar el input a utilizar, se usará el siguiente comando:
 
-    hdfs dfs -put mapper-reducer/doc1-5/*txt mapper-reducer/doc6-10/*txt input
 
 # Utilizar mapreduce
-Tras realizar la generación de carpetas y haber entregado el input a HADOOP, se utiliza el siguiente comando para hacer correr mapper y reducer, quienes generan el contador de palabras (wordcount):
+Para instalar el mapper, se debe instalar mrjob con el comando:
+    pip install mrjob
+Y luego para correrlo:
+    python mapper.py --actors name_actor.tsv --movies title_movie.tsv > resultado.tsv
 
-    mapred streaming -files mapper.py,reducer.py -input /user/hduser/input/*.txt -output /user/hduser/output -mapper ./mapper.py -reducer ./reducer.py
-
-Finalmente, para colocar el output en un archivo .txt, utilizamos el siguiente comando:
-
-    hdfs dfs -cat /user/hduser/output/*
-
-# Buscador de palabras
-Para utilizar el buscador de palabras, debemos utilizar el siguiente comando tras realizar todos los pasos anteriores. Colocará todos los datos del output a un json, que actuará como base de datos:
 
     python create.py
 
