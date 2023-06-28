@@ -1,50 +1,24 @@
-FROM eclipse-temurin:8-jdk-focal
-RUN apt-get update -y \
-    && export DEBIAN_FRONTEND=noninteractive && apt-get install -y --no-install-recommends \
-        sudo \
-        curl \
-        ssh \
-        python3 \
-    && apt-get clean
-RUN useradd -m hduser && echo "hduser:supergroup" | chpasswd && adduser hduser sudo && echo "hduser     ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && cd /usr/bin/ && sudo ln -s python3 python
-COPY ssh_config /etc/ssh/ssh_config
+FROM sequenceiq/hadoop-docker:2.7.1
 
-WORKDIR /home/hduser
-USER hduser
-RUN ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa && cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys && chmod 0600 ~/.ssh/authorized_keys
-ENV HADOOP_VERSION=3.3.3
-ENV HADOOP_HOME /home/hduser/hadoop-${HADOOP_VERSION}
-RUN curl -sL --retry 3 \
-  "http://archive.apache.org/dist/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz" \
-  | gunzip \
-  | tar -x -C /home/hduser/ \
- && rm -rf ${HADOOP_HOME}/share/doc
+# Instalar dependencias adicionales necesarias para el código
+RUN apt-get update && \
+    apt-get install -y python3 python3-pip
 
-ENV HDFS_NAMENODE_USER hduser
-ENV HDFS_DATANODE_USER hduser
-ENV HDFS_SECONDARYNAMENODE_USER hduser
+# Establecer el directorio de trabajo
+WORKDIR /app
 
-ENV YARN_RESOURCEMANAGER_USER hduser
-ENV YARN_NODEMANAGER_USER hduser
+# Copiar los archivos necesarios al contenedor
+COPY mapper-reducer /app/mapper-reducer
+COPY data.json /app/data.json
+COPY title_movie.tsv /app/title_movie.tsv
+COPY resultado.tsv /app/resultado.tsv
+COPY name_actor.tsv /app/name_actor.tsv
+COPY mappertry.py /app/mappertry.py
 
-RUN echo "export JAVA_HOME=/opt/java/openjdk/" >> $HADOOP_HOME/etc/hadoop/hadoop-env.sh
-COPY core-site.xml $HADOOP_HOME/etc/hadoop/
-COPY hdfs-site.xml $HADOOP_HOME/etc/hadoop/
-COPY yarn-site.xml $HADOOP_HOME/etc/hadoop/
+# Instalar las dependencias del código
+RUN pip3 install mrjob
 
-COPY docker-entrypoint.sh $HADOOP_HOME/etc/hadoop/
-
-ENV PATH $PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
-
-ADD mapper-reducer/ mapper-reducer/ 
-
-EXPOSE 50070 50075 50010 50020 50090 8020 9000 9864 9870 10020 19888 8088 8030 8031 8032 8033 8040 8042 22
-
-WORKDIR /usr/local/bin
-RUN sudo ln -s ${HADOOP_HOME}/etc/hadoop/docker-entrypoint.sh .
-WORKDIR /home/hduser
-
-# YARNSTART=0 will prevent yarn scheduler from being launched
-ENV YARNSTART 0
-
-ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
+# Ejecutar el código en el contenedor
+CMD python3 /app/mappertry.py
+#docker build -t hadoop-mapper-reducer . buidear
+#docker run -it --name hadoop-container hadoop-mapper-reducer ejecutar con eso
